@@ -12,7 +12,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'Admob' do
+target 'Flappy_Bird_2023_2023' do
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -34,7 +34,7 @@ target 'Admob' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'AdmobTests' do
+  target 'Flappy_Bird_2023_2023Tests' do
     inherit! :complete
     # Pods for testing
   end

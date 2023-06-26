@@ -1,4 +1,4 @@
-package com.admob;
+package com.Flappy_Bird_2023;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

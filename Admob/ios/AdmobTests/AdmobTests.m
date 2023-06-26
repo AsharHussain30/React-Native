@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface AdmobTests : XCTestCase
+@interface Flappy_Bird_2023Tests : XCTestCase
 
 @end
 
-@implementation AdmobTests
+@implementation Flappy_Bird_2023Tests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {

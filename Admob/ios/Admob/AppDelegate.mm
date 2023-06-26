@@ -6,7 +6,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  self.moduleName = @"Admob";
+  self.moduleName = @"Flappy_Bird_2023";
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 

@@ -1,0 +1,61 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Bungee-Regular.ttf",
+      "sha1": "5229858062d1cc9c3b96abf7a23c4fca2a78efd5"
+    },
+    {
+      "path": "assets/fonts/ChrustyRock-ORLA.ttf",
+      "sha1": "e642b90ddfaf9b85cc3f5f3ff9a0982d1cad1f65"
+    },
+    {
+      "path": "assets/fonts/Manrope-VariableFont_wght.ttf",
+      "sha1": "9498933c7a08a783e9104b9dd4d67f4c80bac23f"
+    },
+    {
+      "path": "assets/fonts/Rubik-Black.ttf",
+      "sha1": "925e4a8da38a97737f013d45c144135553d7e8ef"
+    },
+    {
+      "path": "assets/fonts/Rubik-BlackItalic.ttf",
+      "sha1": "3f77b9d3d8155511d94d72a410c80b3d18001cde"
+    },
+    {
+      "path": "assets/fonts/Rubik-Bold.ttf",
+      "sha1": "f5630ce3441d94baa3a0812683d54d7a1991ef5f"
+    },
+    {
+      "path": "assets/fonts/Rubik-BoldItalic.ttf",
+      "sha1": "6478fd4c8ed2e59e8097cb608b6a7e926e3ec298"
+    },
+    {
+      "path": "assets/fonts/Rubik-Italic.ttf",
+      "sha1": "df8f3ddb2e86659443e1e890b84b9947ce481a25"
+    },
+    {
+      "path": "assets/fonts/Rubik-Light.ttf",
+      "sha1": "63068365b8a2719b1a9268499bd489c1a685c6ce"
+    },
+    {
+      "path": "assets/fonts/Rubik-LightItalic.ttf",
+      "sha1": "5b82e581f8cbd4616a6e1307ffb65754b841d4bc"
+    },
+    {
+      "path": "assets/fonts/Rubik-Medium.ttf",
+      "sha1": "5da5f96c57060e54a922ea0df12b4c29797593b9"
+    },
+    {
+      "path": "assets/fonts/Rubik-MediumItalic.ttf",
+      "sha1": "0c47992a8b6e20ad1e6bb65649ed612351c7774a"
+    },
+    {
+      "path": "assets/fonts/Rubik-Regular.ttf",
+      "sha1": "f0711cdc35046a54d1b887fafbd12de0a5b82549"
+    },
+    {
+      "path": "assets/fonts/Shrikhand-Regular.ttf",
+      "sha1": "ee1a2ca14244d2173f066edb18eb96b6faf4c09f"
+    }
+  ]
+}

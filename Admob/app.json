@@ -1,6 +1,6 @@
 {
-  "name": "Admob",
-  "displayName": "Admob",
+  "name": "Flappy_Bird_2023",
+  "displayName": "Flappy_Bird_2023",
   "react-native-google-mobile-ads": {
     "android_app_id": "ca-app-pub-7268660325970803~3375048930"
   }

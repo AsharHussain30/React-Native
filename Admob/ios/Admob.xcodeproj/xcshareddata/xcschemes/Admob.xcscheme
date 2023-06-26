@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Admob.app"
-               BlueprintName = "Admob"
-               ReferencedContainer = "container:Admob.xcodeproj">
+               BuildableName = "Flappy_Bird_2023.app"
+               BlueprintName = "Flappy_Bird_2023"
+               ReferencedContainer = "container:Flappy_Bird_2023.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "AdmobTests.xctest"
-               BlueprintName = "AdmobTests"
-               ReferencedContainer = "container:Admob.xcodeproj">
+               BuildableName = "Flappy_Bird_2023Tests.xctest"
+               BlueprintName = "Flappy_Bird_2023Tests"
+               ReferencedContainer = "container:Flappy_Bird_2023.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Admob.app"
-            BlueprintName = "Admob"
-            ReferencedContainer = "container:Admob.xcodeproj">
+            BuildableName = "Flappy_Bird_2023.app"
+            BlueprintName = "Flappy_Bird_2023"
+            ReferencedContainer = "container:Flappy_Bird_2023.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Admob.app"
-            BlueprintName = "Admob"
-            ReferencedContainer = "container:Admob.xcodeproj">
+            BuildableName = "Flappy_Bird_2023.app"
+            BlueprintName = "Flappy_Bird_2023"
+            ReferencedContainer = "container:Flappy_Bird_2023.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

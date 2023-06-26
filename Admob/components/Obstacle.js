@@ -7,7 +7,7 @@ const Obstacle = props => {
     const heightBody = props.body.bounds.max.y - props.body.bounds.min.y
 
     const xBody = props.body.position.x - widthBody / 2
-    const yBody = props.body.position.y - heightBody / 2
+    const yBody = props.body.position.y - heightBody / 1.98
 
     const color = props.color;
 

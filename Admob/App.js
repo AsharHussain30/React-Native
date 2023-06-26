@@ -36,18 +36,20 @@ const rewarded = RewardedAd.createForAdRequest(
   },
 );
 
-const interstitial = InterstitialAd.createForAdRequest('ca-app-pub-7268660325970803/6104428675', {
-  requestNonPersonalizedAdsOnly: true,
-});
+const interstitial = InterstitialAd.createForAdRequest(
+  'ca-app-pub-7268660325970803/6104428675',
+  {
+    requestNonPersonalizedAdsOnly: true,
+  },
+);
 
 const rewardedAd = RewardedAd.createForAdRequest(
-  "ca-app-pub-7268660325970803/4553126558",
+  'ca-app-pub-7268660325970803/4553126558',
   {
     requestNonPersonalizedAdsOnly: true,
   },
 );
 export default function App() {
-
   const [interstitialLoaded, setInterstitialLoaded] = useState(false);
   const [rewardedInterstitialLoaded, setRewardedInterstitialLoaded] =
     useState(false);
@@ -205,6 +207,24 @@ export default function App() {
         {!running ? (
           <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <View
+              style={{
+                backgroundColor: 'black',
+                alignSelf: 'flex-end',
+                paddingHorizontal: 20,
+                paddingVertical: 10,
+                marginHorizontal: 10,
+                marginVertical: 30,
+                borderRadius: 25,
+                bottom:30,
+                borderWidth:2,
+                borderColor:"cyan",
+                justifyContent: 'center',
+              }}>
+              <Text style={{fontSize: 16, fontWeight: 'bold', color: 'gold'}}>
+                {currentPoints} Coins
+              </Text>
+            </View>
             <TouchableOpacity
               style={{
                 backgroundColor: 'black',
@@ -226,20 +246,14 @@ export default function App() {
             </TouchableOpacity>
 
             {interstitialLoaded ? (
-              <Button
-                title="Show Interstitial"
-                onPress={() => interstitial.show()}
-              />
+              <Button title="Earn Coin" onPress={() => interstitial.show()} />
             ) : (
-              <Text>Loading Interstitial...</Text>
+              <Text>Loading Ad For Coins...</Text>
             )}
             {rewardedInterstitialLoaded ? (
-              <Button
-                title="Show Rewarded Interstitial"
-                onPress={() => rewardedInterstitial.show()}
-              />
+              <Button title="Earn Coin" onPress={() => rewardedAd.show()} />
             ) : (
-              <Text>Loading Rewarded Interstitial...</Text>
+              <Text>Please Wait Loading Rewarded Coin...</Text>
             )}
 
             <View

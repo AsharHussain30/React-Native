@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.admob"
+    namespace "com.Flappy_Bird_2023"
     defaultConfig {
-        applicationId "com.admob"
+        applicationId "com.Flappy_Bird_2023"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
