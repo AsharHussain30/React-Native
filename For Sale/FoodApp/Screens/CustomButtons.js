@@ -1,16 +1,20 @@
 import React from 'react';
 import {Text, StyleSheet, View, TouchableOpacity} from 'react-native';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
-export const CustomButtons = ({onPress, text, type = 'Primary'}) => {
+export const CustomButtons = ({
+  onPress,
+  text,
+  customstyles,
+  type = 'Primary',
+}) => {
   return (
     <View>
       <TouchableOpacity
-        style={[
-          styles.container,
-          styles.container1,
-          styles[`container_${type}`],
-        ]}
+        style={[styles.container, customstyles, styles[`container_${type}`]]}
         onPress={onPress}>
         <Text style={[styles.text, styles[`text_${type}`]]}>{text}</Text>
       </TouchableOpacity>
@@ -24,14 +28,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     justifyContent: 'center',
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 15,
   },
   text: {
     textAlign: 'center',
     fontWeight: '600',
     fontStyle: 'normal',
     color: 'white',
-    fontSize: wp("4"),
+    fontSize: wp('4'),
+    fontFamily: 'Poppins-Regular',
     textAlignVertical: 'center',
     margin: -5,
   },

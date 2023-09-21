@@ -15,31 +15,29 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
-import {remove} from '../../store/CartSlice';
-import {increment} from '../../store/CartSlice';
-import {decrement} from '../../store/CartSlice';
+// import {increment} from '../../store/CartSlice';
+// import {decrement} from '../../store/CartSlice';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import {remove} from './Redux/CartSlice';
 
 export const EditCart = ({route}) => {
   const navigation = useNavigation();
   const {height, width} = Dimensions.get('window');
 
-  const [cartnotification, setCartnotification] = useState([]);
-
   const items = useSelector(state => state.cart);
-  const products = useSelector(state => state.cart.cart);
+  const products = useSelector(state => state.cart);
   const dispatch = useDispatch();
 
-  console.log(products);
+  // console.log(products);
 
   const handleRemove = product => {
     dispatch(remove(product));
-    console.log(product);
+    // console.log(product);
   };
 
   return (
@@ -74,7 +72,7 @@ export const EditCart = ({route}) => {
             Edit Cart
           </Text>
           <Image
-            source={require('../../assets/themePics/textburger.png')}
+            source={require('../assets/themePics/textburger.png')}
             style={{height: hp('7'), width: wp('10'), left: 7}}
           />
         </View>
@@ -103,9 +101,9 @@ export const EditCart = ({route}) => {
 
         <ScrollView showsVerticalScrollIndicator={false} style={{}}>
           <View style={{alignItems: 'center', marginVertical: hp('5')}}>
-            {products.map((product, index) => (
-              <>
-                <View key={1} style={styles.card1}>
+            {products.map((product, index) => {
+              return (
+                <View key={index} style={styles.card1}>
                   <LinearGradient
                     colors={['orange', 'red']}
                     style={{
@@ -120,7 +118,7 @@ export const EditCart = ({route}) => {
                     }}>
                     <Text
                       style={{
-                        fontSize: wp("5"),
+                        fontSize: wp('5'),
                         color: 'white',
                         textAlignVertical: 'center',
                       }}>
@@ -137,7 +135,7 @@ export const EditCart = ({route}) => {
                     <TouchableOpacity onPress={() => handleRemove(product)}>
                       <MaterialCommunityIcons
                         name="delete"
-                        size={wp("7")}
+                        size={wp('7')}
                         color="gray"
                       />
                     </TouchableOpacity>
@@ -145,7 +143,7 @@ export const EditCart = ({route}) => {
                       style={{
                         color: 'black',
                         paddingLeft: 20,
-                        fontSize: wp("5"),
+                        fontSize: wp('5'),
                         fontWeight: 'bold',
                         textAlign: 'left',
                         textAlignVertical: 'center',
@@ -153,23 +151,23 @@ export const EditCart = ({route}) => {
                       {product.title}
                     </Text>
                     <View style={{marginBottom: 25, paddingLeft: 20}}>
-                      {product.image}
+                      {/* {product.image} */}
                     </View>
                   </View>
                 </View>
-              </>
-            ))}
+              );
+            })}
           </View>
         </ScrollView>
 
-        {products == !cartnotification ? (
+        {products == !products ? (
           <View
             style={{
               flex: 1,
               alignItems: 'center',
             }}>
             <Image
-              source={require('../../assets/themePics/emptycart.png')}
+              source={require('../assets/themePics/emptycart.png')}
               style={{
                 resizeMode: 'contain',
                 position: 'absolute',

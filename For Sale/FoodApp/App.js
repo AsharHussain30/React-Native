@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Burger} from './Screens/Burger';
 import {Started} from './Screens/Started';
@@ -17,6 +17,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
+      <StatusBar hidden />
         <Main />
       </PersistGate>
     </Provider>

@@ -1,14 +1,23 @@
 import React, {useState} from 'react';
 import {TextInput, StyleSheet, View, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { heightPercentageToDP as hp,widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
-export const CustomPasswordInput = ({value, setValue, placeholder}) => {
+export const CustomPasswordInput = ({
+  value,
+  setValue,
+  customstyles,
+  placeholder,
+}) => {
   const [hide, setHide] = useState(true);
   const [visible, setVisible] = useState(true);
   return (
-    <View style={Passwordstyles.pssection}>
+    <View style={[Passwordstyles.pssection, customstyles]}>
       <TextInput
+        textContentType="password"
         placeholder={placeholder}
         secureTextEntry={visible}
         placeholderTextColor="black"
@@ -51,16 +60,20 @@ const Passwordstyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 30,
-    height: hp("8"),
+    height: hp('8'),
     marginBottom: 10,
     borderRadius: 10,
+    borderColor: '#0165E1',
+    borderWidth: 2,
   },
   ps: {
     flex: 1,
     backgroundColor: '#fff',
     marginBottom: 0,
     paddingLeft: 40,
-    fontSize: wp("4"),
+    fontSize: wp('4'),
+    color: 'black',
+    fontFamily: 'Poppins-Regular',
     marginHorizontal: 20,
   },
   eye: {
@@ -76,7 +89,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 30,
-    height: hp("8"),
+    height: hp('8'),
     marginBottom: 15,
     borderRadius: 10,
   },
@@ -84,7 +97,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingLeft: 30,
-    fontSize: wp("4"),
+    fontSize: wp('4'),
+    color: 'black',
+    fontFamily: 'Poppins-Regular',
     marginHorizontal: 30,
   },
 });

@@ -17,6 +17,7 @@ import FontAweIcon from 'react-native-vector-icons/FontAwesome';
 import EvilIcon from 'react-native-vector-icons/EvilIcons';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import {FlatList} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
 
 const {height, width} = Dimensions.get('window');
 const DataItems = [
@@ -29,8 +30,15 @@ const DataItems = [
     title: 'Explore',
   },
   {
-    icon: <AntIcon name="addusergroup" size={width / 12} color="white" />,
-    title: 'Join Friends',
+    icon: (
+      <AntIcon
+        name="creditcard"
+        size={width / 12}
+        color="white"
+        style={{top: 2}}
+      />
+    ),
+    title: 'Payment History',
   },
   {
     icon: <AntIcon name="setting" size={width / 12} color="white" />,
@@ -42,9 +50,11 @@ const DataItems = [
   },
 ];
 
-export const DrawerAnimation = ({navigation}) => {
+export const DrawerAnimation = () => {
   const [click, setClick] = useState(0);
   const [signout, setSignout] = useState(false);
+
+  const navigation = useNavigation();
 
   const {height, width} = Dimensions.get('window');
 
@@ -63,6 +73,25 @@ export const DrawerAnimation = ({navigation}) => {
       },
     },
   });
+
+  const NavigateHandler = index => {
+    if (index == 0) {
+      navigation.navigate('Home');
+      console.log('Home');
+    } else if (index == 1) {
+      // navigation.navigate('Explore');
+      console.log('Explore');
+    } else if (index == 2) {
+      navigation.navigate('PaymentHistory');
+      console.log('Payment History');
+    } else if (index == 3) {
+      navigation.navigate('Settings');
+      console.log('Settings');
+    } else if (index == 4) {
+      navigation.navigate('About');
+      console.log('About');
+    }
+  };
 
   return (
     <View style={{flex: 1, backgroundColor: '#918ae2'}}>
@@ -96,12 +125,14 @@ export const DrawerAnimation = ({navigation}) => {
                 justifyContent: 'center',
               }}>
               <TouchableOpacity
-                onPress={() => setClick(index)}
+                onPress={() => {
+                  NavigateHandler(index);
+                  setClick(index);
+                }}
                 style={{
                   backgroundColor: click == index ? '#d3eaf4' : 'transparent',
                   paddingTop: 7,
                   height: height / 12.5,
-                  marginHorizontal: 20,
                   borderBottomColor: '#C7D3D4FF',
                   borderBottomWidth: 2,
                 }}>
@@ -125,7 +156,8 @@ export const DrawerAnimation = ({navigation}) => {
 
       <TouchableOpacity
         onPress={() => {
-          setSignout, Auth.signOut();
+          //  Auth.signOut();
+          setSignout;
         }}
         style={{
           borderColor: signout ? '#C7D3D4FF' : 'transparent',
@@ -162,9 +194,10 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontWeight: '500',
-    fontSize: width / 20.5,
+    fontSize: width / 24,
     paddingLeft: 30,
     textAlign: 'center',
+    textAlignVertical: 'center',
   },
   bottom: {
     paddingLeft: 50,

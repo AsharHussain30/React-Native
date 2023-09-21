@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "241680056333",
+    "project_id": "zlive-911f3",
+    "storage_bucket": "zlive-911f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241680056333:android:a73574cc528a344e32d544",
+        "android_client_info": {
+          "package_name": "com.zlive"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvJ8HnzmAAFu4b3N-EqYZs8s1rKXNEKN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

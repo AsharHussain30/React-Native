@@ -20,6 +20,8 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import Animated from 'react-native-reanimated';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {responsiveFontSize, responsiveHeight, responsiveWidth} from 'react-native-responsive-dimensions';
 
 export const DetailScreen = ({route}) => {
   // const getData = async () => {
@@ -49,9 +51,11 @@ export const DetailScreen = ({route}) => {
 
   const navigation = useNavigation();
   return (
-    <View style={{height: '100%', width: '100%'}}>
+    <View style={{height: '100%', width: '100%',backgroundColor:"white"}}>
       <View style={{marginHorizontal: wp(3), marginVertical: hp(5)}}>
-        <TouchableOpacity onPress={() => navigation.goBack('')}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack('')}
+          style={{width: '10%'}}>
           <MaterialCommunityIcons
             name="keyboard-backspace"
             size={wp('7%')}
@@ -65,10 +69,10 @@ export const DetailScreen = ({route}) => {
           <MaterialCommunityIcons name="cart" size={wp('7%')} color="#121526" />
         </TouchableOpacity>
       </View>
-      <View style={{marginTop: hp('5%'), marginHorizontal: wp(5)}}>
+      <View style={{marginTop: responsiveHeight(5), marginHorizontal: wp(5)}}>
         <Text
           style={{
-            fontSize: wp('8%'),
+            fontSize: responsiveFontSize(3),
             color: '#121526',
             letterSpacing: -1,
             fontFamily: 'Rubik-Medium',
@@ -77,32 +81,33 @@ export const DetailScreen = ({route}) => {
         </Text>
         <Text
           style={{
-            fontSize: wp('9'),
+            fontSize: responsiveFontSize(4),
             color: '#5650ac',
-            fontFamily: 'Rubik-Medium',
-            fontWeight: 'bold',
             paddingVertical: 10,
+            fontFamily: 'Poppins-Bold',
           }}>
-          4.25$
+          {route.params.params.price + '$'}
         </Text>
         <Image
           source={{
             uri: route.params.params.image,
           }}
           style={{
-            height: hp('50'),
-            width: wp('60'),
+            height: "70%",
+            width: "70%",
+            // backgroundColor: 'red',
             resizeMode: 'contain',
             position: 'absolute',
-            bottom: 0,
-            top: -5,
-            left: wp('32'),
+            aspectRatio:1,
+            bottom: responsiveHeight(20),
+            left: responsiveWidth(32),
           }}
         />
         <Text
           style={{
-            fontSize: wp('5'),
+            fontSize: responsiveFontSize(2),
             color: '#969698',
+            fontFamily: 'Poppins-Regular',
             paddingLeft: wp('3'),
             paddingTop: hp('4'),
             textShadowColor: 'gray',
@@ -113,22 +118,24 @@ export const DetailScreen = ({route}) => {
         </Text>
         <Text
           style={{
-            fontSize: wp('9'),
+            fontSize: responsiveFontSize(3),
             color: 'black',
             paddingLeft: wp('3'),
-            paddingTop: hp('1'),
+            paddingTop: hp('0'),
             textShadowColor: 'gray',
             textShadowRadius: 9,
+            fontFamily: 'Poppins-Regular',
           }}>
           Medium
         </Text>
         <Text
           style={{
-            fontSize: wp('5'),
+            fontSize: responsiveFontSize(2),
             color: '#969698',
             paddingLeft: wp('3'),
             paddingTop: hp('4'),
             textShadowColor: 'gray',
+            fontFamily: 'Poppins-Regular',
             textShadowRadius: 1,
             textShadowOffset: {height: 0, width: 0.7},
           }}>
@@ -136,11 +143,12 @@ export const DetailScreen = ({route}) => {
         </Text>
         <Text
           style={{
-            fontSize: wp('9'),
+            fontSize: responsiveFontSize(3),
             color: 'black',
             paddingLeft: wp('3'),
-            paddingTop: hp('1'),
+            paddingTop: hp('0'),
             textShadowColor: 'gray',
+            fontFamily: 'Poppins-Regular',
             textShadowRadius: 9,
           }}>
           10 min
@@ -148,12 +156,11 @@ export const DetailScreen = ({route}) => {
         <LinearGradient
           colors={['orange', 'red']}
           style={{
-            height: hp('7'),
-            width: wp('40'),
+            height: "12%",
+            width: "40%",
             flexDirection: 'row',
-            position: 'absolute',
-            overflow: 'visible',
-            top: hp('44'),
+            // position: 'absolute',
+            bottom: hp('5'),
             left: wp('47'),
             borderRadius: 15,
             justifyContent: 'space-evenly',
@@ -162,8 +169,13 @@ export const DetailScreen = ({route}) => {
           <TouchableOpacity onPress={() => Decrement()}>
             <MaterialCommunityIcons name="minus" size={34} color="white" />
           </TouchableOpacity>
-          <Text style={{fontSize: wp('5'), color: 'white'}}>
-            {product ? product.quantity : 0}
+          <Text
+            style={{
+              fontSize: responsiveFontSize(3),
+              fontFamily: 'Poppins-Semi',
+              color: 'white',
+            }}>
+            {product == undefined ? 0 : product?.quantity}
           </Text>
           <TouchableOpacity onPress={() => Increment()}>
             <MaterialCommunityIcons name="plus" color="white" size={34} />
@@ -171,7 +183,7 @@ export const DetailScreen = ({route}) => {
           {/* <View style={{alignItems:"center",justifyContent:"center"}}> */}
           {/* <Animated.View style={{opacity:1,}}> 
                   <TouchableOpacity key={1} onPress={() => decrease(product)}>
-                    <Text key={2} style={{fontSize: wp('5'), color: 'white',textAlign:"center"}}>
+                    <Text key={2} style={{fontSize: responsiveFontSize(5), color: 'white',textAlign:"center"}}>
                       Add To Cart
                     </Text>
                   </TouchableOpacity>
@@ -181,83 +193,92 @@ export const DetailScreen = ({route}) => {
           {/* </View> */}
         </LinearGradient>
       </View>
-      <View
-        style={{
-          height: hp('1'),
-          width: wp('35'),
-          backgroundColor: '#908ae2',
-          alignSelf: 'center',
-          borderRadius: 50,
-          // bottom: -55,
-          position: 'absolute',
-          top: hp('73'),
-        }}></View>
-      <View
-        style={{
-          backgroundColor: '#908ae2',
-          flexDirection: 'row',
-          borderTopLeftRadius: 25,
-          borderTopRightRadius: 25,
-          justifyContent: 'center',
-          alignItems: 'center',
-          bottom: 0,
-          position: 'absolute',
-          width: '95%',
-          alignSelf: 'center',
-        }}>
-        <View style={{marginRight: wp('30'), paddingVertical: hp('1')}}>
-          <Text
-            style={{
-              fontSize: wp('4'),
-              color: 'white',
-              paddingTop: hp('6'),
-              opacity: 0.7,
-              textAlign: 'center',
-            }}>
-            Ratings
-          </Text>
-          <Text
-            style={{
-              fontSize: hp('6'),
-              color: 'white',
-              paddingTop: hp('1'),
-              opacity: 1,
-            }}>
-            4.8
-          </Text>
-          <Entypo
-            name="emoji-flirt"
-            color="#fed169"
-            size={wp('6')}
-            style={{bottom: 50, left: 75}}
-          />
-        </View>
-        <View>
-          <Text
-            style={{
-              fontSize: wp('4'),
-              color: 'white',
-              paddingTop: hp('6'),
-              opacity: 0.7,
-              textAlign: 'center',
-            }}>
-            Kcal
-          </Text>
-          <Text
-            style={{
-              fontSize: hp('6'),
-              color: 'white',
-              paddingTop: hp('1'),
-              opacity: 1,
-            }}>
-            180
-          </Text>
-          <Entypo
-            name="emoji-happy"
-            color="#fed169"
-            size={wp('6')}
-            style={{bottom: 50, left: 95}}
-          />
+      <View style={{flex:1,bottom:0}}>
+        <View
+          style={{
+            height: hp('1'),
+            width: wp('25'),
+            backgroundColor: '#908ae2',
+            alignSelf: 'center',
+            borderRadius: 50,
+            bottom:responsiveHeight(26.5),
+            position: 'absolute',
+          }}
+        />
+        <View
+          style={{
+            backgroundColor: '#908ae2',
+            flexDirection: 'row',
+            borderTopLeftRadius: 25,
+            borderTopRightRadius: 25,
+            justifyContent: 'center',
+            alignItems: 'center',
+            bottom: 0,
+            position: 'absolute',
+            width: '95%',
+            height: responsiveHeight(26),
+            alignSelf: 'center',
+          }}>
+          <View style={{marginRight: wp('30')}}>
+            <Text
+              style={{
+                fontFamily: 'Poppins-Medium',
+                fontSize: responsiveFontSize(2),
+                color: 'white',
+                paddingTop: hp('6'),
+                right:10,
+                opacity: 0.7,
+                textAlign: 'center',
+              }}>
+              Ratings
+            </Text>
+            <Text
+              style={{
+                fontSize: responsiveFontSize(3),
+                color: 'white',
+                paddingTop: hp('1'),
+                opacity: 1,
+                fontFamily: 'Poppins-Medium',
+              }}>
+              {route.params.params.rating}
+            </Text>
+            <Entypo
+              name="emoji-flirt"
+              color="#fed169"
+              size={wp('6')}
+              style={{bottom: '40%', left: '100%'}}
+            />
+          </View>
+          <View>
+            <Text
+              style={{
+                fontSize: responsiveFontSize(2),
+                color: 'white',
+                paddingTop: hp('6'),
+                fontFamily: 'Poppins-Medium',
+                right:10,
+                opacity: 0.7,
+                textAlign: 'center',
+              }}>
+              Kcal
+            </Text>
+            <Text
+              style={{
+                fontSize: responsiveFontSize(3),
+                color: 'white',
+                fontFamily: 'Poppins-Medium',
+                paddingTop: hp('1'),
+                opacity: 1,
+              }}>
+              {route.params.params.cal}
+            </Text>
+            <Entypo
+              name="emoji-happy"
+              color="#fed169"
+              size={wp('6')}
+              style={{bottom: '40%', left: '100%'}}
+            />
+          </View>
         </View>
       </View>
     </View>

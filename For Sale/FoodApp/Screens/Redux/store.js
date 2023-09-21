@@ -7,6 +7,7 @@ import {persistStore, persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {combineReducers, legacy_createStore as createStore} from 'redux';
 import FavSlice from './FavSlice';
+import MyOrdersSlice from './MyOrdersSlice';
 
 let persistConfig = {
   key: 'root',
@@ -16,6 +17,7 @@ let persistConfig = {
 let rootReducer = combineReducers({
   cart: CartSlice,
   fav: FavSlice,
+  payments: MyOrdersSlice,
 });
 
 let persistedReducer = persistReducer(persistConfig, rootReducer);

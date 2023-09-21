@@ -10,10 +10,16 @@ import {
   TouchableOpacityBase,
   Dimensions,
   ActivityIndicator,
+  FlatList,
 } from 'react-native';
 import React, {useState, useRef} from 'react';
 import {MotiView, useAnimationState} from 'moti';
-import {Easing} from 'react-native-reanimated';
+import {
+  Easing,
+  SlideInLeft,
+  SlideInRight,
+  event,
+} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontIcon from 'react-native-vector-icons/FontAwesome5';
@@ -33,10 +39,12 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Switch} from 'react-native-gesture-handler';
+import {responsiveHeight, responsiveWidth} from 'react-native-responsive-dimensions';
 
 const {width, height} = Dimensions.get('window');
 console.log(width, height);
-// 360 x 640 4.7' inch
 
 export const Home = () => {
   const navigation = useNavigation();
@@ -50,33 +58,37 @@ export const Home = () => {
       title: 'Drinks',
       image:
         'https://res.cloudinary.com/dhox1ri5p/image/upload/v1671452000/Drink_jlzdt1.png',
-      rating: 10,
-      cal: 120,
+      rating: 4.5,
+      cal: 80,
       id: 1,
+      price: 4.25,
     },
     {
       title: 'Cakes',
       image:
         'https://res.cloudinary.com/dhox1ri5p/image/upload/v1671451998/donut_wldy9s.png',
-      rating: 10,
-      cal: 120,
+      rating: 4.7,
+      cal: 50,
       id: 2,
+      price: 3.54,
     },
     {
       title: 'Hot Dog',
       image:
         'https://res.cloudinary.com/dhox1ri5p/image/upload/v1671451999/roll_uw6wpt.png',
-      rating: 10,
-      cal: 120,
+      rating: 3.5,
+      cal: 140,
       id: 3,
+      price: 6.75,
     },
     {
       title: 'Burger',
       image:
         'https://res.cloudinary.com/dhox1ri5p/image/upload/v1671452000/burger_kv8qpt.png',
-      rating: 10,
-      cal: 120,
+      rating: 4.9,
+      cal: 180,
       id: 4,
+      price: 7.25,
     },
   ];
 
@@ -100,10 +112,6 @@ export const Home = () => {
   const scrollingtoward = useRef(new Animated.Value(0)).current;
 
   const {height, width} = Dimensions.get('window');
-  // const dispatch = useDispatch();
-  // const handleAdd = product => {
-  //   dispatch(add(product));
-  // };
 
   const Data = [
     {
@@ -112,20 +120,22 @@ export const Home = () => {
           source={{
             uri: 'https://res.cloudinary.com/dhox1ri5p/image/upload/v1671452000/Drink_jlzdt1.png',
           }}
-          onLoadStart={() => setLoading(true)}
-          onLoadEnd={() => setLoading(false)}
+          onLoad={() => <ActivityIndicator color={'green'} size={24} />}
           style={{
-            height: wp('45%'),
-            width: hp('25%'),
+            //   height: "100%",
+            //   width: hp('25%'),
+            flex: 0.9,
             resizeMode: 'contain',
-            position: 'relative',
-            bottom: 10,
+            aspectRatio: 1,
+            // position: 'relative',
+            // bottom: 10,
             left: -7,
           }}
         />
       ),
       title: <Text style={{fontFamily: 'Rubik-Medium'}}>Drink</Text>,
       id: 1,
+      rating: 4.5,
       key: 1,
     },
     {
@@ -134,20 +144,23 @@ export const Home = () => {
           source={{
             uri: 'https://res.cloudinary.com/dhox1ri5p/image/upload/v1671451998/donut_wldy9s.png',
           }}
-          onLoadStart={() => setLoading(true)}
-          onLoadEnd={() => setLoading(false)}
+          onLoad={() => <ActivityIndicator color={'green'} size={24} />}
           style={{
-            height: wp('45%'),
-            width: hp('24%'),
+            // height: wp('40%'),
+            // width: hp('24%'),
+            // position: 'relative',
+            //bottom: 0,
+            flex: 0.9,
             resizeMode: 'contain',
-            position: 'relative',
-            bottom: 0,
+            aspectRatio: 1,
+            top: 8,
             left: 4,
           }}
         />
       ),
       title: <Text style={{fontFamily: 'Rubik-Medium'}}>Cakes</Text>,
       id: 2,
+      rating: 4.7,
       key: 2,
     },
     {
@@ -156,13 +169,14 @@ export const Home = () => {
           source={{
             uri: 'https://res.cloudinary.com/dhox1ri5p/image/upload/v1671451999/roll_uw6wpt.png',
           }}
-          onLoadStart={() => setLoading(true)}
-          onLoadEnd={() => setLoading(false)}
+          onLoad={() => <ActivityIndicator color={'green'} size={24} />}
           style={{
-            height: wp('45%'),
-            width: hp('25%'),
+            // height: wp('45%'),
+            // width: hp('25%'),
+            flex: 0.9,
+            aspectRatio: 1,
             resizeMode: 'contain',
-            position: 'relative',
+            // position: 'relative',
             top: 10,
             left: -5,
           }}
@@ -170,6 +184,7 @@ export const Home = () => {
       ),
       title: <Text style={{fontFamily: 'Rubik-Medium'}}>Hot Dog</Text>,
       id: 3,
+      rating: 3.5,
       key: 3,
     },
     {
@@ -178,20 +193,23 @@ export const Home = () => {
           source={{
             uri: 'https://res.cloudinary.com/dhox1ri5p/image/upload/v1671452000/burger_kv8qpt.png',
           }}
-          onLoadStart={() => setLoading(true)}
-          onLoadEnd={() => setLoading(false)}
+          onLoad={() => <ActivityIndicator color={'green'} size={24} />}
           style={{
-            height: wp('45%'),
-            width: hp('25%'),
+            // height: wp('45%'),
+            // width: hp('25%'),
+            flex: 0.9,
             resizeMode: 'contain',
-            position: 'relative',
-            top: 7,
+            aspectRatio: 1,
+            // position: 'relative',
+            // top: 7,
+            top: 13,
             left: -5,
           }}
         />
       ),
       title: <Text style={{fontFamily: 'Rubik-Medium'}}>Burger</Text>,
       id: 4,
+      rating: 4.9,
       key: 4,
     },
   ];
@@ -199,20 +217,149 @@ export const Home = () => {
   const shadow = {
     shadowColor: '#ece1ff',
     shadowOpacity: 0.9,
-    shadowRadius: 20,
+    shadowRadius: 10,
     shadowOffset: {height: 2, width: 0},
   };
 
   const [loading, setLoading] = useState(false);
 
+  const Carousel = [
+    {
+      item: (
+        <LinearGradient
+          colors={['#baa2e1', '#d6c4f4']}
+          start={{x: 0.1, y: 1}}
+          end={{x: 0.55, y: 0.3}}
+          style={[styles.wineView, shadow]}>
+          <View style={{justifyContent:"space-evenly",}}>
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: wp('4'),
+                opacity: 0.5,
+                fontFamily: 'Bungee-Regular',
+                // bottom: '16%',
+              }}>
+              Discover
+            </Text>
+            <Text
+              style={{
+                color: '#fef9fb',
+                fontSize: wp('5.5'),
+                // bottom: '15%',
+                fontFamily: 'Shrikhand-Regular',
+              }}>
+              Best lunch {'\n'}of the day
+            </Text>
+            {/* <TouchableOpacity onPress={sending}> */}
+            <MaterialCommunityIcons
+              name="arrow-right"
+              size={23}
+              color="#fef9fb"
+              style={{top: '10%'}}
+            />
+            {/* </TouchableOpacity> */}
+          </View>
+          <Image
+            source={require('../assets/themePics/wine.png')}
+            style={{
+              // height: hp('25.3'),
+              height: "180%",
+              width: '100%',
+              aspectRatio:1,
+              // backgroundColor:"red",
+              resizeMode: 'contain',
+              marginLeft: responsiveWidth(80)/ 3,
+              zIndex:6,
+              resizeMode: 'contain',
+              position:"absolute",
+              bottom:"4%"
+            }}
+          />
+        </LinearGradient>
+      ),
+    },
+    {
+      item: (
+        <LinearGradient
+          colors={['#baa2e1', '#d6c4f4']}
+          start={{x: 0.1, y: 1}}
+          end={{x: 0.55, y: 0.3}}
+          style={[styles.wineView, shadow]}>
+          <Text
+            style={{
+              color: '#fff',
+              fontSize: wp('4'),
+              opacity: 0.5,
+              fontFamily: 'Bungee-Regular',
+              top: -10,
+            }}>
+            Discover
+          </Text>
+          <Text
+            style={{
+              color: '#fef9fb',
+              fontSize: wp('5.5'),
+              bottom: 10,
+              fontFamily: 'Shrikhand-Regular',
+            }}>
+            Best lunch {'\n'}of the day
+          </Text>
+          {/* <TouchableOpacity onPress={sending}> */}
+          <MaterialCommunityIcons
+            name="arrow-right"
+            size={23}
+            color="#fef9fb"
+            style={{top: hp(0.7)}}
+          />
+          {/* </TouchableOpacity> */}
+          <Image
+            source={require('../assets/themePics/burger.png')}
+            style={{
+              height: hp('20'),
+              resizeMode: 'contain',
+              position: 'absolute',
+              bottom: hp('1.5'),
+            }}
+          />
+        </LinearGradient>
+      ),
+    },
+  ];
+
+  const [carousel, setCarousel] = useState(false);
+
+  // console.log(carousel);
+
+  const CarouselAnimation = () => {
+    Animated.timing(Animate, {
+      toValue: carousel ? -391 : 4,
+      useNativeDriver: true,
+      duration: 500,
+    }).start();
+    setCarousel(!carousel);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      CarouselAnimation();
+    }, 3000);
+  });
+
+  const Animate = useRef(new Animated.Value(0)).current;
+
+  const [theme, setTheme] = useState(true);
+
+  const toggleSwitch = () => setTheme(!theme);
+
   return (
-    <View style={{flex: 1, height: height, width: width}}>
-      <View style={{flex: 1}}>
+    <View>
+      <View style={{height:"100%",width:"100%"}}>
         <DrawerAnimation />
       </View>
       <Animated.View
         style={{
-          flex: 1,
+          flex:1,
           margin: 0,
           left: 0,
           right: 0,
@@ -224,12 +371,12 @@ export const Home = () => {
           borderColor: showMenu ? 'white' : 'transparent',
           borderWidth: 2,
           padding: showMenu ? 22 : 0,
-          backgroundColor: 'white',
+          backgroundColor: theme ? 'white' : 'purple',
           transform: [{scale: scale}, {translateX: moveToRight}],
         }}>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={{padding: hp('2%'), height: height, width: width}}>
+          style={{padding: hp('2%'), height: '100%', width: '100%'}}>
           <TouchableOpacity
             style={{justifyContent: 'flex-start'}}
             onPress={() => {
@@ -251,10 +398,14 @@ export const Home = () => {
                 height: hp('3%'),
                 width: wp('7%'),
                 top: 5,
+                tintColor: theme ? 'black' : 'white',
                 position: 'absolute',
               }}
             />
           </TouchableOpacity>
+          <View style={{alignSelf: 'center'}}>
+            <Switch onValueChange={toggleSwitch} value={theme} />
+          </View>
           <TouchableOpacity
             onPress={() => navigation.navigate('Cart')}
             style={{position: 'absolute', alignSelf: 'flex-end'}}>
@@ -262,18 +413,23 @@ export const Home = () => {
               <MaterialCommunityIcons
                 name="cart"
                 size={wp('7%')}
-                color="#121526"
+                color={theme ? '#121526' : 'white'}
               />
             </Text>
           </TouchableOpacity>
-          <View style={{marginTop: hp('10%'), flex: 1}}>
-            <View style={{flex: 1, flexDirection: 'row'}}>
+          <View style={{marginTop:width > 400 ? responsiveHeight(6): responsiveHeight(3) ,}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginLeft: '2%',
+              }}>
               <Text
                 style={{
-                  fontSize: wp('10%'),
-                  color: '#121526',
+                  fontSize: width > 400 ? wp('10%') : wp('9%'),
+                  color: theme ? '#121526' : '#FFF9',
                   letterSpacing: -1,
-                  fontFamily: 'Rubik-Medium',
+                  fontFamily: 'Poppins-Bold',
                 }}>
                 Top of {'\n'}the day
               </Text>
@@ -282,22 +438,23 @@ export const Home = () => {
                 style={{
                   height: hp('7'),
                   width: wp('10'),
-                  top: hp('7'),
-                  left: 4,
+                  top: hp('3.5'),
+                  left: 10,
                 }}
               />
             </View>
-            {/* <LinearGradient
+            {/*             <LinearGradient
               colors={['#baa2e1', '#d6c4f4']}
-              style={styles.wineView}> */}
-            <View style={styles.wineView}>
+              start={{x: 0.1, y: 1}}
+              end={{x: 0.55, y: 0.3}}
+              style={[styles.wineView, shadow]}>
               <Text
                 style={{
-                  color: '#d8c8ec',
+                  color: '#fff',
                   fontSize: wp('4'),
+                  opacity: 0.5,
                   fontFamily: 'Bungee-Regular',
-                  bottom: hp('2'),
-                  top: 0,
+                  top: -10,
                 }}>
                 Discover
               </Text>
@@ -305,20 +462,20 @@ export const Home = () => {
                 style={{
                   color: '#fef9fb',
                   fontSize: wp('5.5'),
-                  bottom: 0,
+                  bottom: 10,
                   fontFamily: 'Shrikhand-Regular',
                 }}>
                 Best lunch {'\n'}of the day
               </Text>
               {/* <TouchableOpacity onPress={sending}> */}
-              <MaterialCommunityIcons
+            {/* <MaterialCommunityIcons
                 name="arrow-right"
                 size={23}
                 color="#fef9fb"
-                style={{top: hp('3%')}}
-              />
-              {/* </TouchableOpacity> */}
-              <Image
+                style={{top: hp(0.7)}}
+              /> */}
+            {/* </TouchableOpacity> */}
+            {/* <Image
                 source={require('../assets/themePics/wine.png')}
                 style={{
                   height: hp('30'),
@@ -328,12 +485,87 @@ export const Home = () => {
                   bottom: hp('1.5'),
                 }}
               />
-            </View>
-            {/* </LinearGradient> */}
+            </LinearGradient> */}
+            {/* Carousel */}
+            {/* <FlatList
+              data={Carousel}
+              contentContainerStyle={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+              scrollEnabled={false}
+              showsHorizontalScrollIndicator={false}
+              // pagingEnabled
+              horizontal
+              renderItem={({item}) => {
+                return (
+                  <Animated.View
+                    style={{
+                      marginRight: 200,
+                      // transform: [{translateX: Animate}],
+                    }}>
+                    {item.item}
+                  </Animated.View>
+                );
+              }}
+            /> */}
+            <LinearGradient
+          colors={['#baa2e1', '#d6c4f4']}
+          start={{x: 0.1, y: 1}}
+          end={{x: 0.55, y: 0.3}}
+          style={[styles.wineView, shadow]}>
+          <View style={{justifyContent:"space-evenly",}}>
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: wp('4'),
+                opacity: 0.5,
+                fontFamily: 'Bungee-Regular',
+                // bottom: '16%',
+              }}>
+              Discover
+            </Text>
+            <Text
+              style={{
+                color: '#fef9fb',
+                fontSize: wp('5.5'),
+                // bottom: '15%',
+                fontFamily: 'Shrikhand-Regular',
+              }}>
+              Best lunch {'\n'}of the day
+            </Text>
+            {/* <TouchableOpacity onPress={sending}> */}
+            <MaterialCommunityIcons
+              name="arrow-right"
+              size={23}
+              color="#fef9fb"
+              style={{top: '10%'}}
+            />
+            {/* </TouchableOpacity> */}
+          </View>
+          <Image
+            source={require('../assets/themePics/wine.png')}
+            style={{
+              // height: hp('25.3'),
+              height: "180%",
+              width: '100%',
+              aspectRatio:1,
+              // backgroundColor:"red",
+              resizeMode: 'contain',
+              marginLeft: responsiveWidth(80)/ 3,
+              zIndex:6,
+              resizeMode: 'contain',
+              position:"absolute",
+              bottom:"4%"
+            }}
+          />
+        </LinearGradient>
+     
+            {/* Carousel */}
             <View
               style={{
                 justifyContent: 'space-between',
-                flex: 1,
+                // flex: 1,
                 flexDirection: 'row',
                 paddingTop: hp('3.5'),
                 paddingBottom: 0,
@@ -342,7 +574,7 @@ export const Home = () => {
               <Text
                 style={{
                   fontSize: wp('3.5'),
-                  color: 'gray',
+                  color: theme ? 'gray' : '#fff9',
                   fontFamily: 'Rubik-Medium',
                   textAlignVertical: 'center',
                 }}>
@@ -360,7 +592,7 @@ export const Home = () => {
                   <MaterialCommunityIcons
                     name="arrow-left"
                     size={wp('5')}
-                    color="gray"
+                    color={theme ? 'gray' : '#fff9'}
                     style={{
                       right: wp('6'),
                     }}
@@ -369,17 +601,17 @@ export const Home = () => {
 
                 <TouchableOpacity
                   onPress={() => {
-                    Animated.timing(scrollingtoward, {
-                      toValue: -360,
-                      duration: 400,
-                      useNativeDriver: true,
-                    }).start();
-                    setPressToward(!pressToward);
+                    // Animated.timing(scrollingtoward, {
+                    //   toValue: -360,
+                    //   duration: 400,
+                    //   useNativeDriver: true,
+                    // }).start();
+                    // setPressToward(!pressToward);
                   }}>
                   <MaterialCommunityIcons
                     name="arrow-right"
                     size={wp('5')}
-                    color="black"
+                    color={theme ? 'gray' : '#fff9'}
                   />
                 </TouchableOpacity>
               </Text>
@@ -387,21 +619,14 @@ export const Home = () => {
             <ScrollView
               horizontal={true}
               pagingEnabled
+              maximumZoomScale={5}
               showsHorizontalScrollIndicator={false}>
               {Data.map((product, index) => (
-                <Animated.View
-                  key={index}
-                  style={{
-                    transform: [
-                      {translateY: scrollingdownward},
-                      {translateX: scrollingtoward},
-                    ],
-                  }}>
+                <Animated.View key={index}>
                   <View
                     style={{
                       justifyContent: 'space-evenly',
                       flexDirection: 'row',
-                      flex: 1,
                       marginTop: hp('3.5'),
                     }}>
                     <TouchableOpacity
@@ -413,6 +638,24 @@ export const Home = () => {
                       }>
                       <View
                         style={{
+                          flexDirection: 'row',
+                          position: 'absolute',
+                          zIndex: 6,
+                          left: '14%',
+                          top: '4%',
+                        }}>
+                        <MaterialCommunityIcons
+                          name="star"
+                          size={wp('4.5')}
+                          color="orange"
+                        />
+                        <Text
+                          style={{color: 'gray', fontFamily: 'Poppins-Medium'}}>
+                          {product.rating}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
                           height: hp('28'),
                           width: wp('37'),
                           backgroundColor: '#d3eaf4',
@@ -422,21 +665,12 @@ export const Home = () => {
                           justifyContent: 'flex-end',
                           marginLeft: wp('3.6'),
                           marginRight: wp('4.9'),
-                          marginBottom: 20,
                         }}>
                         <View
                           style={{
                             justifyContent: 'center',
                             alignItems: 'center',
                           }}>
-                          {loading == true ? (
-                            product.image
-                          ) : (
-                            <ActivityIndicator
-                              size={34}
-                              style={{marginBottom: hp('9')}}
-                            />
-                          )}
                           {/* <Image
                             source={{
                               uri: product.image,
@@ -450,7 +684,8 @@ export const Home = () => {
                               // bottom: 10,
                               // left: -7,
                             }}
-                          />  */}
+                          /> */}
+                          {product.image}
                         </View>
                         <Text
                           key={2}
@@ -459,7 +694,7 @@ export const Home = () => {
                             fontSize: wp('5'),
                             fontWeight: '800',
                             color: '#121526',
-                            paddingBottom: hp('1.5'),
+                            paddingBottom: hp('2.5'),
                           }}>
                           {product.title}
                         </Text>
@@ -522,17 +757,19 @@ export const Home = () => {
 const styles = StyleSheet.create({
   wineView: {
     backgroundColor: '#ece1ff',
-    height: width / 2.1,
+    // height: responsiveWidth(50),
+    // width:responsiveWidth(91),
     borderRadius: 25,
-    marginTop: 25,
-    paddingVertical: 35,
+    marginTop: responsiveHeight(2),
+    paddingVertical: responsiveHeight(3.6),
     paddingHorizontal: 25,
     borderBottomColor: '#ece1ff',
-    borderBottomWidth: 15,
+    borderBottomWidth: 12,
     borderLeftWidth: 1,
     borderLeftColor: '#ece1ff',
     borderRightColor: '#ece1ff',
     borderRightWidth: 1,
+    // flex:1
   },
   drawer: {
     flex: 1,
@@ -590,7 +827,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    textAlign: 'center',
     backgroundColor: '#195190FF',
     borderRadius: 20,
     borderColor: '#d60664',
